@@ -57,12 +57,6 @@ module Paperclip
     end
 
     def link_or_copy_file(src, dest)
-      Paperclip.log("Trying to link #{src} to #{dest}")
-      FileUtils.ln(src, dest, force: true) # overwrite existing
-      @destination.close
-      @destination.open.binmode
-    rescue Errno::EXDEV, Errno::EPERM, Errno::ENOENT, Errno::EEXIST, Errno::EACCES => e
-      Paperclip.log("Link failed with #{e.message}; copying link #{src} to #{dest}")
       FileUtils.cp(src, dest)
     end
   end
